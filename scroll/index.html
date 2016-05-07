@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>无缝滚动</title>
+    <link href="index.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../jquery-1.12.2.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //方法一，此法setInterval与animate的时间差就是停顿的时间，setInterval>=scroller的时间
+/*
+            var x_offset = 0;
+            var width_li = $('.content li').width();
+            function scroll(){
+                $('.content').find('ul').animate({'margin-left':-width_li},2000,function(){
+                    $(".content ul li:eq(0)").appendTo($(".content ul"));//appendTo能够将被选内容回到结尾
+                    $(".content ul").css({"margin-left":0});
+                });
+            }
+            setInterval(scroll,2000)
+*/
+
+            //方法二 不用animate 也可以将ul设置为absolute 控制left来实现滚动。
+            //            $('.view').append($('.view ul').clone())//复制
+            var x_offset = 0;
+            function offset1(){
+                x_offset++;
+                x_offset=x_offset==100?0:x_offset;
+                scroll_1();
+
+
+            }
+            function scroll_1(){
+                if(x_offset==0){
+                    $(".view li:eq(0)").appendTo($(".view ul"));//appendTo能够将被选内容回到结尾
+                }
+                $('.view ul').css('margin-left',-x_offset);
+            }
+            setInterval(offset1,50);
+        })
+    </script>
+</head>
+<body>
+<div class="content">
+    <div class="view">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+        </ul >
+    </div>
+</div>
+<script>
+</script>
+</body>
+</html>

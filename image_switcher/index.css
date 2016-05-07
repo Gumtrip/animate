@@ -4,7 +4,9 @@ a,img{border:0;}
 body{font:12px/180% Arial, Helvetica, sans-serif,"宋体";}
 /* zoombox */
 .zoombox{width:686px;margin:20px auto 0 auto;}
-.zoompic{border:solid 1px #dfdfdf;width:684px;height:394px;background:url(images/loading.gif) no-repeat 50% 50%;}
+.zoompic{border:solid 1px #dfdfdf;width:684px;height:394px;background:url(images/loading.gif) no-repeat 50% 50%;position: relative}
+.zoompic .pic_info{width: 100%;height: 20px;color: white;opacity: 0.3;bottom: 0px;background: black;position: absolute}
+
 
 .sliderbox{height:76px;overflow:hidden;margin:6px 0 0 0;}
 .sliderbox .arrow-btn{width:38px;height:76px;background:url(images/arrow-btn.png) no-repeat;cursor:pointer;}

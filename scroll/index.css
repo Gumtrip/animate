@@ -1,0 +1,6 @@
+*{ margin: 0px; padding: 0px;}
+li{ list-style: none;}
+.content{ width: 1000px; height:100px; overflow: hidden; border: #4e83c2 solid 1px; margin:50px auto; }
+.view{width: 2000px;height: 100px}
+.content ul{ width: 1100px; height:100px;float: left}
+.content ul li{ float: left; width: 100px; height: 100px; outline:#ccc solid 1px;background: blue}

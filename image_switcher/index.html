@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>jquery图片切换</title>
+    <link rel="stylesheet" href="index.css"/>
+    <script type="text/javascript" src="../jquery-1.12.2.min.js"></script>
+    <script>
+        //按钮是通过两侧按钮控制的，点一下，i+1
+        //点击略缩图是通过$(this)来追踪点击哪张图片的
+        $(document).ready(function () {
+            //切换大图,添加current类
+            var slidewidth = $('#thumbnail li').width();//获取略缩图的宽度，得到每次的移动距离，常量
+            var index=0;//图片索引，初始为0
+            var len = $("#thumbnail li").length;//图片数量
+            var range = 5;//图片导航初始数量
+            var ul_stay_len=(len-range)*slidewidth//ul最后停留的距离
+            var pic_alt=$('#thumbnail li img').eq(index).attr('alt');
+            $('.pic_info').html(pic_alt);
+
+            $("#btn-right").on('click', function () {
+                index++;
+                index=index==len?0:index;
+                switcher();
+            })
+            $("#btn-left").on('click', function () {
+                index--;
+                index=index==-1?len-1:index;
+                switcher();
+            })
+
+            $("#thumbnail li").on('click', function () {
+                //var index = $(this).index()这样的写法不对，不能再重新定义，只能重新赋值！！
+                index = $(this).index();
+                switcher();
+            })
+            //定时器
+            function timer (){
+                index++;
+                index=index==len?0:index;
+                switcher();
+            }
+            var stop = setInterval(timer,2000);
+            $('sliderbox').hover(function () {
+                clearInterval(stop);
+            }, function () {
+                stop = setInterval(timer,2000);
+            })
+            function switcher(){
+                var pic_name=$("#thumbnail li a").eq(index).attr('href');
+                pic_alt=$('#thumbnail li img').eq(index).attr('alt');
+                console.log(pic_alt);
+                $('.zoompic img').attr('src',pic_name)//切换大图，它这里是读取略缩图上的地址！并不是本来就已经预读取了！
+                $('.zoompic a').attr('href',pic_name);
+                $("#thumbnail li").eq(index).addClass('current').siblings().removeClass('current');
+                $('.pic_info').html(pic_alt);
+                if(index<=1){
+                    $("#thumbnail ul").animate({
+                        left:0,
+                    },'fast');
+
+                }else if(index<=len-range){//前三张图片均不动，8-5=3,
+                    $("#thumbnail ul").animate({//能够向右位移的距离只有2个单位，8张图片-5个
+                        left:-slidewidth*(index-2),//从第四张图片index才+1，此时index=3,
+                    },'fast');
+
+                }else{
+                    $("#thumbnail ul").animate({
+                        left:-ul_stay_len,
+                    },'fast');
+
+                }
+
+            }
+            //阻止默认行为
+            $("#thumbnail a").click(function (e) {
+                e.preventDefault();
+            });
+        })
+    </script>
+</head>
+<body>
+
+
+
+<div class="zoombox">
+
+    <div class="zoompic"><div class="pic_info"></div> <a  target="_blank"><img src="images/3427.jpg" width="684" height="394" alt="美女配奥迪A4L墙纸" /></a> </div>
+
+    <div class="sliderbox">
+        <div id="btn-left" class="arrow-btn dasabled"></div>
+        <div class="slider" id="thumbnail">
+            <ul>
+                <li><a href="images/3427.jpg" target="_blank"><img src="images/14fd.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸01" /></a>
+                </li>
+                <li><a href="images/23463.jpg" target="_blank"><img src="images/234fa.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸02" /></a>
+                </li>
+                <li><a href="images/3247.jpg" target="_blank"><img src="images/412saf.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸03" /></a>
+                </li>
+                <li><a href="images/26547.jpg" target="_blank"><img src="images/41356a.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸04" /></a>
+                </li>
+                <li><a href="images/2153.jpg" target="_blank"><img src="images/432sadf.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸05" /></a>
+                </li>
+                <li><a href="images/3427.jpg" target="_blank"><img src="images/14fd.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸06" /></a>
+                </li>
+                <li>
+                    <a href="images/26547.jpg" target="_blank">
+                        <img src="images/41356a.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸07" />
+                    </a>
+                </li>
+                <li class="current"><a href="images/52347.jpg" target="_blank"><img src="images/41a.jpg" width="115" height="74" alt="美女配奥迪A4L墙纸08" /></a>
+                </li>
+
+            </ul>
+        </div>
+        <div id="btn-right" class="arrow-btn"></div>
+    </div>
+
+</div><!--slider end-->
+
+
+</body>
+</html>
